@@ -26,13 +26,16 @@ let getaddbtn = document.querySelector("#add");
 let getul = document.querySelector("#ul");
 let getclearbtn = document.querySelector("#clear");
 
+let UserUid = localStorage.getItem("UserId");
+
+
 //  Add ToDo in Database  //
 
 getaddbtn.addEventListener("click", async () => {
   if (getinp.value == "") {
     alert("please Enter a value");
   } else {
-    const dataRef = push(ref(db, `users/Karachi`));
+    const dataRef = push(ref(db, `users/Karachi/${UserUid}/ToDo`));
     set(dataRef, {
       ToDo: getinp.value,
     });
@@ -42,7 +45,7 @@ getaddbtn.addEventListener("click", async () => {
 //  Read ToDo from Database //
 
 function getData() {
-  const starCountRef = ref(db, `users/Karachi`);
+  const starCountRef = ref(db, `users/Karachi/${UserUid}/ToDo`);
   onValue(starCountRef, (snapshot) => {
     const data = snapshot.val();
     getul.innerHTML = " ";
@@ -89,7 +92,7 @@ getData();
 
 function delTodo(id) {
   console.log(id);
-  const deltodo = ref(db, `users/Karachi/${id}`);
+  const deltodo = ref(db, `users/Karachi/${UserUid}/ToDo/${id}`);
   remove(deltodo);
 }
 
@@ -102,7 +105,7 @@ function editTodo(e, id) {
   );
 
   if (editToDo) {
-    const ToDoedit = ref(db, `users/Karachi/${id}`);
+    const ToDoedit = ref(db, `users/Karachi/${UserUid}/ToDo/${id}`);
 
     const EditToDo = {
       ToDo: editToDo,
