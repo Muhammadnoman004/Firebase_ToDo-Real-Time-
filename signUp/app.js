@@ -2,6 +2,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.2/firebas
 import {
   getAuth,
   createUserWithEmailAndPassword,
+  onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-auth.js";
 import { getDatabase, ref, set,} from "https://www.gstatic.com/firebasejs/10.5.2/firebase-database.js";
 const firebaseConfig = {
@@ -16,6 +17,14 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 const db = getDatabase(app);
+
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    const UserUid = user.uid;
+    localStorage.setItem("UserUid", UserUid);
+    location.href = "../index.html"
+  }
+});
 
 let Btn = document.querySelector("#signUp");
 

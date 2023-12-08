@@ -15,6 +15,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 
+
 let Btn2 = document.querySelector("#send_btn");
 
 Btn2.addEventListener("click" , ()=>{

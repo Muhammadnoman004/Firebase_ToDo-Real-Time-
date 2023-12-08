@@ -1,4 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
+import {getAuth , onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
 import {
   getDatabase,
   ref,
@@ -19,14 +20,26 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
 const db = getDatabase(app);
 
 let getinp = document.querySelector("#inp");
 let getaddbtn = document.querySelector("#add");
 let getul = document.querySelector("#ul");
 let getclearbtn = document.querySelector("#clear");
+let logOutBtn = document.querySelector('#logOut');
 
 let UserUid = localStorage.getItem("UserId");
+
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    const UserUid = user.uid;
+    localStorage.setItem("UserUid", UserUid);
+  } else {
+    localStorage.removeItem("UserUid");
+    location.href = "./signUp/index.html";
+  }
+});
 
 
 //  Add ToDo in Database  //
@@ -122,6 +135,12 @@ getclearbtn.addEventListener("click", () => {
   const clearTodo = ref(db, `users/Karachi/`);
   remove(clearTodo);
 });
+
+logOutBtn.addEventListener("click" , ()=>{
+  auth.signOut().then(() =>{
+    localStorage.removeItem("UserUid")
+  })
+})
 
 window.delTodo = delTodo;
 window.editTodo = editTodo;

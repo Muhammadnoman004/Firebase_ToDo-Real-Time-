@@ -111,6 +111,21 @@ body{
 #clear:hover{
     background-color: rgb(21, 124, 138);
 }
+#logOut{
+    background-color: rgb(24, 147, 163);
+    color: white;
+    border: none;
+    padding: 10px;
+    margin-top: 20px;
+    border-radius: 5px;
+}
+#logOut:hover{
+    background-color: rgb(21, 124, 138);
+}
+.btnDiv{
+    display: flex;
+    justify-content: space-between;
+}
 
 @media screen and (max-width: 600px) {
     .main{

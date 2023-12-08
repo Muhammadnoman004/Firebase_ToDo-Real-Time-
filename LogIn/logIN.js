@@ -2,6 +2,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.2/firebas
 import {
   getAuth,
   signInWithEmailAndPassword ,
+  onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-auth.js";
 const firebaseConfig = {
   apiKey: "AIzaSyDlzNer2kChEaFoLw2X4sbUTbG3JqWFFbk",
@@ -13,7 +14,15 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-const auth = getAuth();
+const auth = getAuth(app);
+
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    const UserUid = user.uid;
+    localStorage.setItem("UserUid", UserUid);
+    location.href = "../index.html"
+  }
+});
 
 let log_Btn = document.querySelector("#signIn");
 
